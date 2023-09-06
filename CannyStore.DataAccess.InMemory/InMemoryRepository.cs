@@ -18,7 +18,7 @@ namespace CannyStore.DataAccess.InMemory
         {
             className = typeof(T).Name;
             items = cache[className] as List<T>;
-            if (items != null)
+            if (items == null)
             {
                 items = new List<T>();
             }

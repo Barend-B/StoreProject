@@ -321,6 +321,14 @@
       <Project>{F665C44D-86A9-46DD-9E82-B1A815E00604}</Project>
       <Name>CannyStore.DataAccess.InMemory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CannyStore.DataAccess.SQL\CannyStore.DataAccess.SQL.csproj">
+      <Project>{4aafe119-7085-4174-9f87-003c3fce13f0}</Project>
+      <Name>CannyStore.DataAccess.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CannyStore.Services\CannyStore.Services.csproj">
+      <Project>{999dc00e-dd5e-4a46-a7ac-cd80c2b44fd8}</Project>
+      <Name>CannyStore.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
