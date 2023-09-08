@@ -44,7 +44,7 @@ namespace CannyStore.UI.Controllers
                 if(file != null)
                 {
                     product.Image = product.Id + Path.GetExtension(file.FileName);
-                    file.SaveAs(Server.MapPath("//Content//ProductImages" + product.Image));
+                    file.SaveAs(Server.MapPath("//Content//ProductImages//" + product.Image));
                 }
                 context.Insert(product);
                 context.Commit();
@@ -79,7 +79,7 @@ namespace CannyStore.UI.Controllers
                 if (file != null)
                 {
                     product.Image = product.Id + Path.GetExtension(file.FileName);
-                    file.SaveAs(Server.MapPath("//Content//ProductImages" + product.Image));
+                    file.SaveAs(Server.MapPath("//Content//ProductImages//" + product.Image));
                 }
                 p.Category = product.Category;
                 p.Description = product.Description;
