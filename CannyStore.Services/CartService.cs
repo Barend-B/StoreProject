@@ -88,19 +88,62 @@ namespace CannyStore.Services
             cartContext.Commit();
         }
 
-        public CartSummaryVM GetCart(HttpContextBase httpContext)
+        
+
+        public CartSummaryVM GetCartSummary(HttpContextBase httpContextBase)
         {
-            throw new NotImplementedException();
+            Cart cart = GetCart(httpContextBase, false);
+            CartSummaryVM model = new CartSummaryVM(0, 0);
+            if(cart != null)
+            {
+                int? cartCount = (from item in cart.CartItems
+                                  select item.Quantity).Sum();
+                decimal? cartTotal = (from item in cart.CartItems
+                                      join p in productContext.Collection() on
+                                      item.ProductId equals p.Id
+                                      select item.Quantity * p.Price).Sum();
+                model.CartCount = cartCount ?? 0;
+                model.CartTotal = cartTotal ?? decimal.Zero;
+                return model;
+            }
+            else
+            {
+                return model;
+            }
         }
 
         public List<CartItemVM> GetCartItems(HttpContextBase httpContext)
         {
-            throw new NotImplementedException();
+            Cart cart = GetCart(httpContext, false);
+            if (cart != null)
+            {
+                var result = (from b in cart.CartItems
+                              join p in productContext.Collection() on
+                              b.ProductId equals p.Id
+                              select new CartItemVM
+                              {
+                                  Id = b.Id,
+                                  Quantity = b.Quantity,
+                                  ProductName = p.Name,
+                                  Price = p.Price,
+                              }).ToList();
+                return result;
+            }
+            else
+            {
+                return new List<CartItemVM>();
+            }
         }
 
         public void RemoveFromCart(HttpContextBase httpContext, string itemId)
         {
-            throw new NotImplementedException();
+            Cart cart = GetCart(httpContext, false);
+            CartItem item = cart.CartItems.FirstOrDefault(i => i.Id == itemId);
+            if(item != null)
+            {
+                cart.CartItems.Remove(item);
+                cartContext.Commit();
+            }
         }
     }
 }

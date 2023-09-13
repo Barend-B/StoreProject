@@ -2,6 +2,7 @@ using CannyStore.Core.Contracts;
 using CannyStore.Core.Models;
 using CannyStore.DataAccess.InMemory;
 using CannyStore.DataAccess.SQL;
+using CannyStore.Services;
 using System;
 
 using Unity;
@@ -48,6 +49,9 @@ namespace CannyStore.UI
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IRepository<Product>, SQLRepository<Product>>();
             container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
+            container.RegisterType<IRepository<Cart>, SQLRepository<Cart>>();
+            container.RegisterType<IRepository<CartItem>, SQLRepository<CartItem>>();
+            container.RegisterType<ICartService, CartService>();
         }
     }
 }

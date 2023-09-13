@@ -14,7 +14,7 @@ namespace CannyStore.Core.Contracts
         void AddToCart(HttpContextBase httpContext, string productId);
         void RemoveFromCart(HttpContextBase httpContext, string itemId);
         List<CartItemVM> GetCartItems(HttpContextBase httpContext);
-        CartSummaryVM GetCart(HttpContextBase httpContext);
+        CartSummaryVM GetCartSummary(HttpContextBase httpContext);
         void ClearCart(HttpContextBase httpContext);
     }
 }
