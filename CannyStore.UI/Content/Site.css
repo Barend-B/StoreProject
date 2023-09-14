@@ -18,3 +18,8 @@ select,
 textarea {
     max-width: 280px;
 }
+.nav{
+    float:right;
+    margin-top:15px;
+    list-style:none;
+}

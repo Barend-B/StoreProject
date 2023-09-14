@@ -1,0 +1,13 @@
+﻿@model CannyStore.Core.ViewModels.CartSummaryVM
+<ul class="navbar navbar-nav nav">
+    <li>
+        <a href="@Url.Action("Index", "Cart")">
+            <span class="badge bg-gradient">@Model.CartCount</span>
+        </a>
+    </li>
+    <li>
+        <a href="@Url.Action("Index", "Cart")">
+            @String.Format("{0:c}", Model.CartTotal)
+        </a>
+    </li>
+</ul>

@@ -8,10 +8,20 @@
 <div class="col-md-2">
     <h4>Filter By Category</h4>
     <div class="list-group">
-        @Html.ActionLink("All","Index", null, new {@class = Request["Category"] == null ? "list-group-item-action active" : "list-group-item list-group-item-action"})
+        @Html.ActionLink("All","Index", null,
+       new 
+       {
+           @class = Request["Category"] == null ? "list-group-item-action active" 
+           : "list-group-item list-group-item-action"
+       })
         @foreach (var cat in Model.ProductCategories)
         {
-            @Html.ActionLink(cat.Category, "Index", new {Category = cat.Category}, new{@class = Request["Category"] == null ? "list-group-item-action active":"list-group-item list-group-item-action"})
+            @Html.ActionLink(cat.Category, "Index",
+           new {Category = cat.Category}, new
+           {
+               @class = Request["Category"] == null ? "list-group-item-action active":
+               "list-group-item list-group-item-action"
+           })
         }
     </div>
 </div>
