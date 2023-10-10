@@ -5,7 +5,7 @@
 
 <div class="container">
 <h1>Products</h1>
-<div class="col-md-2">
+<div class="">
     <h4>Filter By Category</h4>
     <div class="list-group">
         @Html.ActionLink("All","Index", null,
@@ -25,11 +25,11 @@
         }
     </div>
 </div>
-<div class="col-md-10">
+<div class="">
     @foreach(var item in Model.Products)
     {
         <div class="row">
-        <div class="col-md-4" product>
+        <div class="product">
             <div class="col-md-12">
                 <img class="img-fluid image" src="~/Content/ProductImages/@item.Image" />
             </div>
@@ -53,6 +53,6 @@
 <style>
     .product {
         display: inline-block;
-        width: 20%
+        width: 100%
     }
 </style>
