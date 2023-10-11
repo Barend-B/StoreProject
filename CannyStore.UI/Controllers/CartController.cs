@@ -1,4 +1,6 @@
 ﻿using CannyStore.Core.Contracts;
+using CannyStore.Core.Models;
+using CannyStore.Services;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,9 +13,11 @@ namespace CannyStore.UI.Controllers
     public class CartController : Controller
     {
         ICartService cartService;
-        public CartController(ICartService CartService )
+        IOrderService orderService;
+        public CartController(ICartService CartService, IOrderService OrderService )
         {
             this.cartService = CartService;
+            this.orderService = OrderService;
         }
         public ActionResult Index()
         {
@@ -34,6 +38,22 @@ namespace CannyStore.UI.Controllers
         {
             var cartSummary = cartService.GetCartSummary(this.HttpContext);
             return PartialView(cartSummary);
+        }
+        public ActionResult Checkout()
+        {
+            return RedirectToAction("Error");
+        }
+        [HttpPost]
+        public ActionResult CheckOut(Order order) 
+        {
+            var cartItem = cartService.GetCartItems(this.HttpContext);
+            order.OrderStatus = "Order Created";
+            order.Email = User.Identity.Name;
+            //process the payment via 3rd Party
+            order.OrderStatus = "Payment Processed";
+            orderService.CreateOrder(order, cartItem);
+            cartService.ClearCart(this.HttpContext);
+            return RedirectToAction("Thank you", new {OrderId = order.Id});
         }
     }
 }

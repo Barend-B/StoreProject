@@ -53,6 +53,7 @@ namespace CannyStore.UI
             container.RegisterType<IRepository<CartItem>, SQLRepository<CartItem>>();
             container.RegisterType<ICartService, CartService>();
             container.RegisterType<IRepository<Customer>, SQLRepository<Customer>>();
+            container.RegisterType<IOrderService, OrderService>();
         }
     }
 }
