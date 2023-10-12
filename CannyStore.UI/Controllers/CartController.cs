@@ -14,10 +14,12 @@ namespace CannyStore.UI.Controllers
     {
         ICartService cartService;
         IOrderService orderService;
-        public CartController(ICartService CartService, IOrderService OrderService )
+        IRepository<Customer> customers;
+        public CartController(ICartService CartService, IOrderService OrderService, IRepository<Customer> Customers)
         {
             this.cartService = CartService;
             this.orderService = OrderService;
+            this.customers = Customers;
         }
         public ActionResult Index()
         {
@@ -39,9 +41,28 @@ namespace CannyStore.UI.Controllers
             var cartSummary = cartService.GetCartSummary(this.HttpContext);
             return PartialView(cartSummary);
         }
+        [Authorize]
         public ActionResult Checkout()
         {
-            return RedirectToAction("Error");
+            Customer customer = customers.Collection().FirstOrDefault(c => c.Email == User.Identity.Name);
+            if (customer != null)
+            {
+                Order order = new Order()
+                {
+                    Email = customer.Email,
+                    State = customer.State,
+                    Street = customer.Street,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    ZipCode = customer.ZipCode,
+                };
+                return View(order);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+            
         }
         [HttpPost]
         public ActionResult CheckOut(Order order) 
@@ -54,6 +75,11 @@ namespace CannyStore.UI.Controllers
             orderService.CreateOrder(order, cartItem);
             cartService.ClearCart(this.HttpContext);
             return RedirectToAction("Thank you", new {OrderId = order.Id});
+        }
+        public ActionResult Thankyou(string OrderId)
+        {
+            ViewBag.OrderId = OrderId;
+            return View();
         }
     }
 }
